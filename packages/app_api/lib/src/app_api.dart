@@ -1,6 +1,5 @@
 import 'package:app_api/app_api.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:fresh_dio/fresh_dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -29,18 +28,12 @@ class AppApiClient {
   late final Box<User> userBox;
 
   /// Watch all changes to the user stored
-  Stream<User> get user => userBox.watch().map((event) {
-        debugPrint('event value: ${event.value ?? 'null'}');
-        return event.value as User;
-      });
+  Stream<User> get user => userBox.watch().map((event) => event.value as User);
 
   /// Gets the user stored in the Hive box
-  User get currentUser {
-    debugPrint('currentUser: ${userBox.get(_userKey) ?? 'null'}');
-    return userBox.get(_userKey) ?? User.empty;
-  }
+  User get currentUser => userBox.get(_userKey) ?? User.empty;
 
-  ///
+  /// Api init
   Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter<User>(UserAdapter());
@@ -60,7 +53,7 @@ class AppApiClient {
     } catch (_) {}
   }
 
-  ///
+  /// Log out
   Future<void> logOut() async {
     await userBox.put(_userKey, User.empty);
     await _fresh.clearToken();
