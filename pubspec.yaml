@@ -8,6 +8,12 @@ environment:
   flutter: 3.0.4
 
 dependencies:
+  app_api:
+    path: packages/app_api
+  app_inputs:
+    path: packages/app_inputs
+  authentication_repository:
+    path: packages/authentication_repository
   bloc: ^8.0.3
   equatable: ^2.0.3
   flutter:
