@@ -20,8 +20,15 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) => AppBloc(_authenticationRepository),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => AppBloc(_authenticationRepository),
+          ),
+          BlocProvider(
+            create: (_) => OnboardingCubit(),
+          ),
+        ],
         child: const AppView(),
       ),
     );
@@ -40,9 +47,13 @@ class _AppViewState extends State<AppView> {
   void initState() {
     super.initState();
     final appBloc = context.read<AppBloc>();
+    final onboardingCubit = context.read<OnboardingCubit>();
     _refresh = GoRouterRefreshStream(appBloc.stream);
     _router = GoRouter(
       redirect: (state) {
+        if (onboardingCubit.state) {
+          return state.location == '/' ? '/onboarding' : null;
+        }
         if (appBloc.state.status.isAuthenticated) {
           return state.location == '/login' ? '/' : null;
         } else {

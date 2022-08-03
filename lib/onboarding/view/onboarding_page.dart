@@ -1,4 +1,7 @@
+import 'package:auth_example/app/app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -11,7 +14,13 @@ class OnboardingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Onboarding page'),
-            ElevatedButton(onPressed: () {}, child: const Text('Next'))
+            ElevatedButton(
+              onPressed: () {
+                context.read<OnboardingCubit>().showedOnboarding();
+                context.go('/login');
+              },
+              child: const Text('Next'),
+            )
           ],
         ),
       ),
