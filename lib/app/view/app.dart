@@ -2,6 +2,7 @@ import 'package:auth_example/app/app.dart';
 import 'package:auth_example/home/home.dart';
 import 'package:auth_example/l10n/l10n.dart';
 import 'package:auth_example/login/login.dart';
+import 'package:auth_example/onboarding/onboarding.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,8 +51,18 @@ class _AppViewState extends State<AppView> {
       },
       refreshListenable: _refresh,
       routes: <GoRoute>[
-        GoRoute(path: '/', builder: (_, __) => const HomePage()),
-        GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
+        GoRoute(
+          path: '/onboarding',
+          builder: (context, state) => const OnboardingPage(),
+        ),
+        GoRoute(
+          path: '/',
+          builder: (_, __) => const HomePage(),
+        ),
+        GoRoute(
+          path: '/login',
+          builder: (_, __) => const LoginPage(),
+        ),
       ],
       debugLogDiagnostics: true,
     );
